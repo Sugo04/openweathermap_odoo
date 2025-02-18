@@ -6,15 +6,15 @@ import logging
 # Configurar el logger
 _logger = logging.getLogger(__name__)
 
-
 class WeatherInfo(models.Model):
-    _name = "weather.info"
-    _description = "Weather Information"
-    _rec_name = "city"
-    city = fields.Char(string="City", required=True)
-    api_key = fields.Char(string="API Key", required=True)
-    temperature = fields.Float(string="Temperature", readonly=True)
-    description = fields.Char(string="Description", readonly=True)
+    _name = 'weather.info'
+    _description = 'Weather Information'
+    _rec_name = 'city'
+
+    city = fields.Char(string='City', required=True)
+    api_key = fields.Char(string='API Key', required=True)
+    temperature = fields.Float(string='Temperature', readonly=True)
+    description = fields.Char(string='Description', readonly=True)
 
     def get_weather_data(self):
         # Construir la URL para hacer la solicitud a la API de OpenWeatherMap
@@ -26,15 +26,13 @@ class WeatherInfo(models.Model):
             if response.status_code == 200:
                 data = response.json()
                 # Actualizar los campos del registro con los datos obtenidos de la API
-                self.temperature = data["main"]["temp"]
-                self.description = data["weather"][0]["description"]
+                self.temperature = data['main']['temp']
+                self.description = data['weather'][0]['description']
             else:
                 # Si hay un error con la solicitud, lanzar una excepción
-                raise UserError(
-                    "Error al obtener los datos del clima. Código de respuesta: %d"
-                    % response.status_code
-                )
+                raise UserError("Error al obtener los datos del clima. Código de respuesta: %d" % response.status_code)
+        
         except requests.exceptions.RequestException as e:
             # Manejar las excepciones de la solicitud HTTP
             _logger.error("Error al intentar obtener los datos del clima: %s", str(e))
-            raise UserError(f"Hubo un error al conectarse a la API")
+            raise UserError(f"Hubo un error al conectarse a la API: {str(e)}")
