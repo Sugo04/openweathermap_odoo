@@ -44,6 +44,6 @@
     <!-- Menú raíz para Weather -->
     <menuitem id="menu_weather_root" name="Weather" sequence="10" />
     <!-- Menú secundario que referencia a la acción ventana -->
-    <menuitem id="menu_weather_info" name="Weather Info"
-        parent="menu_weather_root" action="action_weather_info" />
+    <menuitem id="menu_weather_info" name="Weather Info" parent="menu_weather_root"
+        action="action_weather_info" />
 </odoo>
